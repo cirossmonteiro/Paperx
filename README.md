@@ -1,1 +1,2 @@
 Paperx
+Facebook group crawler. Using Chrome Dev Tools, you may use paperx.js as snippet, so you're able to download data (user, datetime and content) for some posts and save it in .json. Then you run the paperx.py to analyze it.
