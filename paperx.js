@@ -2,8 +2,8 @@ console.log("started");
 window.status = 0;
 window.counter = 0;
 window.code = null;
-window.limCounter = 10;
-//window.positive = ["sim","bom","boa","bem","fácil","facil","legal"];
+window.limCounter = 100;
+window.limPosts = 50;
 
 downloadJSON = (fileContent) => {
     const filename = "facebook_group.json";
@@ -20,6 +20,7 @@ downloadJSON = (fileContent) => {
 
 window.code = setInterval(function(){
     if (window.status == 1) {
+        console.log("busy");
         return;
     }
     window.status = 1;
@@ -29,9 +30,10 @@ window.code = setInterval(function(){
     console.log("posts: "+posts.length);
     window.status = 0;
     window.counter++;
-    if (window.counter == 10) {
+    if (posts.length >= window.limPosts) {
+    //if (window.counter >= window.limCounter) {
         clearInterval(window.code);
-        // it's over
+        // scrolling is over
         var analysis = [];
         var contents = "";
         for(let i = 0; i < posts.length; i++) {
@@ -45,42 +47,8 @@ window.code = setInterval(function(){
                 content: content,
                 datetime: datetime
             });
-            console.log(datetime);
-            contents = contents.concat(content);
         }
-        const words = contents.split(" ");
-        var dict = {};
-        for (let i = 0; i < words.length; i++) {
-            const word = words[i];
-            if(word in dict) {
-                dict[word]++;
-            }
-            else {
-                dict[word] = 1;
-            }
-        }
-        var dict2 = [];
-        for(let word in dict) {
-            dict2.push({
-                word: word,
-                amount: dict[word]
-            })
-        }
-        dict2.sort((a,b) => {
-           return b.amount - a.amount;
-        });
         downloadJSON(JSON.stringify(analysis));
-        //console.log(dict2.slice(0,10)); // it works until here
-
-        /*const positive = ["action","sim","bom","boa","bem","fácil","facil","legal"];
-        for (let post in analysis) {
-            for (let pos in positive) {
-                if (post.content.includes(pos)) {
-                    console.log(post.content);
-                    break;
-                }
-            }
-        }*/
         console.log("end");
     }
 },200);
