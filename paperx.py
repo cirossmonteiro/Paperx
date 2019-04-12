@@ -20,6 +20,7 @@ about = {
     "help" : "help dúvida socorro ajuda auxílio debug erro ?",
     "course" : "curso udemy coursera khan graduacao administração ads engenharia ciência tcc",
     "work" : "trabalh rh contato emprego estágio",
+    "multimidia" : "imagem print foto vídeo live",
     }
 
 count = 0
@@ -37,10 +38,10 @@ for post in [p['content'] for p in source]:
                 ab2 = ''.join(ch for ch in unicodedata.normalize('NFKD', ab2) 
                     if not unicodedata.combining(ch))
                 if ab2 in word:
-                    keys.add(ab2)
+                    keys.add((ab, ab2))
     if len(keys) > 0:
         count += 1
-        #print(keys,'\n',post2,'\n\n\n')
+        print(keys,'\n',post2,'\n\n\n')
     else:
         pass
         # not classified
